@@ -1,5 +1,5 @@
-streamlit==1.45.1
-plotly==6.1.2
-pandas==2.2.0
-deta==1.2.0
-python-dotenv==1.0.0
+streamlit
+plotly
+pandas
+deta
+python-dotenv

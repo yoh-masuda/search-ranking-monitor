@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>検索順位モニタリング管理画面</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Amazon・楽天 検索順位モニタリング</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('dashboard')">ダッシュボード</button>
+            <button class="tab-button" onclick="showTab('products')">商品管理</button>
+            <button class="tab-button" onclick="showTab('search')">検索実行</button>
+        </div>
+
+        <!-- ダッシュボードタブ -->
+        <div id="dashboard" class="tab-content active">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="sku-filter">商品選択:</label>
+                    <select id="sku-filter" onchange="updateKeywords()">
+                        <option value="">すべて</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="keyword-filter">キーワード:</label>
+                    <select id="keyword-filter">
+                        <option value="">すべて</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="period-filter">期間:</label>
+                    <select id="period-filter">
+                        <option value="7">過去7日間</option>
+                        <option value="30" selected>過去30日間</option>
+                        <option value="90">過去90日間</option>
+                        <option value="365">過去1年間</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="updateChart()">グラフ更新</button>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="rankingChart"></canvas>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Amazon最高順位</h3>
+                    <p class="stat-value" id="amazon-best">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>楽天最高順位</h3>
+                    <p class="stat-value" id="rakuten-best">-</p>
+                </div>
+                <div class="stat-card">
+                    <h3>最終更新</h3>
+                    <p class="stat-value" id="last-update">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品管理タブ -->
+        <div id="products" class="tab-content">
+            <div class="product-form">
+                <h2>新規商品登録</h2>
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="sku-name">商品名:</label>
+                        <input type="text" id="sku-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amazon-url">Amazon URL:</label>
+                        <input type="url" id="amazon-url" placeholder="https://www.amazon.co.jp/dp/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="rakuten-url">楽天URL:</label>
+                        <input type="url" id="rakuten-url" placeholder="https://item.rakuten.co.jp/...">
+                    </div>
+                    <div class="form-group">
+                        <label>キーワード（最大10個）:</label>
+                        <div id="keywords-container">
+                            <input type="text" class="keyword-input" placeholder="キーワード1">
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addKeywordInput()">+ キーワード追加</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary">商品を登録</button>
+                </form>
+            </div>
+
+            <div class="product-list">
+                <h2>登録済み商品</h2>
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>商品名</th>
+                            <th>Amazon</th>
+                            <th>楽天</th>
+                            <th>キーワード</th>
+                            <th>最新順位</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 検索実行タブ -->
+        <div id="search" class="tab-content">
+            <div class="search-control">
+                <h2>検索実行</h2>
+                <p>登録されている商品の検索順位を取得します。</p>
+                
+                <div class="search-options">
+                    <div class="form-group">
+                        <label for="search-sku">対象商品:</label>
+                        <select id="search-sku">
+                            <option value="">すべての商品</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-large" onclick="runSearch()">
+                        <span id="search-button-text">検索を実行</span>
+                        <span id="search-spinner" class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+
+                <div id="search-result" class="search-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

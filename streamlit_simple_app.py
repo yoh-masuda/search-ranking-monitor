@@ -195,9 +195,11 @@ with tab1:
                                 marker=dict(size=8)
                             ))
                 
-                fig.update_yaxis(autorange="reversed", title="順位")
-                fig.update_xaxis(title="日付")
-                fig.update_layout(height=500)
+                fig.update_layout(
+                    yaxis=dict(autorange="reversed", title="順位"),
+                    xaxis=dict(title="日付"),
+                    height=500
+                )
                 
                 st.plotly_chart(fig, use_container_width=True)
                 

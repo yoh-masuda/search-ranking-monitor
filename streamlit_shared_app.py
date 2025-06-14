@@ -101,6 +101,8 @@ def add_product(product_data):
             return False
     else:
         # ローカルモード
+        if 'products' not in st.session_state:
+            st.session_state.products = []
         st.session_state.products.append(product_data)
         return True
 
@@ -117,6 +119,8 @@ def add_ranking(ranking_data):
             return False
     else:
         # ローカルモード
+        if 'rankings' not in st.session_state:
+            st.session_state.rankings = []
         st.session_state.rankings.append(ranking_data)
         return True
 
@@ -131,7 +135,8 @@ def delete_product(key):
             return False
     else:
         # ローカルモード（インデックスで削除）
-        st.session_state.products.pop(key)
+        if 'products' in st.session_state:
+            st.session_state.products.pop(key)
         return True
 
 # タイトル
@@ -195,49 +200,53 @@ with tab1:
         if selected_keyword != "すべて":
             df = df[df['keyword'] == selected_keyword]
         
-        if not df.empty:
-            # 日付でソート
-            df['date'] = pd.to_datetime(df['date'])
-            df = df.sort_values('date')
-            
-            # グラフ作成
-            fig = make_subplots(
-                rows=1, cols=1,
-                subplot_titles=("検索順位推移",)
-            )
-            
-            # 商品・キーワードごとにプロット
-            for product in df['product'].unique():
-                for keyword in df[df['product'] == product]['keyword'].unique():
-                    data = df[(df['product'] == product) & (df['keyword'] == keyword)]
-                    
-                    # Amazon
-                    if 'amazon_rank' in data.columns:
-                        fig.add_trace(go.Scatter(
-                            x=data['date'],
-                            y=data['amazon_rank'],
-                            mode='lines+markers',
-                            name=f"{product} - {keyword} (Amazon)",
-                            line=dict(width=2),
-                            marker=dict(size=8)
-                        ))
-                    
-                    # 楽天
-                    if 'rakuten_rank' in data.columns:
-                        fig.add_trace(go.Scatter(
-                            x=data['date'],
-                            y=data['rakuten_rank'],
-                            mode='lines+markers',
-                            name=f"{product} - {keyword} (楽天)",
-                            line=dict(width=2, dash='dash'),
-                            marker=dict(size=8)
-                        ))
-            
-            fig.update_yaxis(autorange="reversed", title="順位")
-            fig.update_xaxis(title="日付")
-            fig.update_layout(height=500)
-            
-            st.plotly_chart(fig, use_container_width=True)
+        if not df.empty and len(df) > 0:
+            try:
+                # 日付でソート
+                df['date'] = pd.to_datetime(df['date'])
+                df = df.sort_values('date')
+                
+                # グラフ作成
+                fig = make_subplots(
+                    rows=1, cols=1,
+                    subplot_titles=("検索順位推移",)
+                )
+                
+                # 商品・キーワードごとにプロット
+                for product in df['product'].unique():
+                    for keyword in df[df['product'] == product]['keyword'].unique():
+                        data = df[(df['product'] == product) & (df['keyword'] == keyword)]
+                        
+                        # Amazon
+                        if 'amazon_rank' in data.columns:
+                            fig.add_trace(go.Scatter(
+                                x=data['date'],
+                                y=data['amazon_rank'],
+                                mode='lines+markers',
+                                name=f"{product} - {keyword} (Amazon)",
+                                line=dict(width=2),
+                                marker=dict(size=8)
+                            ))
+                        
+                        # 楽天
+                        if 'rakuten_rank' in data.columns:
+                            fig.add_trace(go.Scatter(
+                                x=data['date'],
+                                y=data['rakuten_rank'],
+                                mode='lines+markers',
+                                name=f"{product} - {keyword} (楽天)",
+                                line=dict(width=2, dash='dash'),
+                                marker=dict(size=8)
+                            ))
+                
+                fig.update_yaxis(autorange="reversed", title="順位")
+                fig.update_xaxis(title="日付")
+                fig.update_layout(height=500)
+                
+                st.plotly_chart(fig, use_container_width=True)
+                
+            except Exception as e:
+                st.error(f"グラフの表示中にエラーが発生しました: {str(e)}")
             
             # 統計情報
             col1, col2, col3 = st.columns(3)
@@ -488,8 +497,10 @@ with st.sidebar:
                     st.error("データのクリアに失敗しました")
             else:
                 # ローカルモード
-                st.session_state.products = []
-                st.session_state.rankings = []
+                if 'products' in st.session_state:
+                    st.session_state.products = []
+                if 'rankings' in st.session_state:
+                    st.session_state.rankings = []
                 st.rerun()
         
         if db_products:

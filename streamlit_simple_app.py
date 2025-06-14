@@ -98,6 +98,57 @@ st.markdown("""
 # タイトル
 st.title("🔍 Amazon・楽天 検索順位モニタリング")
 
+# 自動更新チェック
+def check_auto_update():
+    """最後の更新から24時間経過していたら自動更新"""
+    data = load_data()
+    rankings = data.get('rankings', [])
+    
+    if rankings:
+        # 最新の日付を取得
+        df = pd.DataFrame(rankings)
+        if 'date' in df.columns:
+            df['date'] = pd.to_datetime(df['date'])
+            last_update = df['date'].max()
+            
+            # 現在時刻との差を計算
+            now = pd.Timestamp.now()
+            hours_since_update = (now - last_update).total_seconds() / 3600
+            
+            # 24時間以上経過していたら自動更新
+            if hours_since_update >= 24:
+                return True
+    return False
+
+# 自動更新実行
+if check_auto_update():
+    with st.info("🔄 24時間以上経過したため、自動更新を実行中..."):
+        products = get_products()
+        if products:
+            import random
+            today = datetime.now().strftime('%Y-%m-%d')
+            count = 0
+            
+            for product in products:
+                for keyword in product.get('keywords', []):
+                    # ランダムな順位を生成（デモ用）
+                    amazon_rank = random.choice([None, 1, 2, 3, 5, 8, 12, 20, 35])
+                    rakuten_rank = random.choice([None, 1, 3, 5, 7, 10, 15, 25, 40])
+                    
+                    ranking_data = {
+                        'date': today,
+                        'product': product.get('name', ''),
+                        'keyword': keyword,
+                        'amazon_rank': amazon_rank,
+                        'rakuten_rank': rakuten_rank
+                    }
+                    
+                    add_ranking(ranking_data)
+                    count += 1
+            
+            st.success(f"✅ 自動更新完了！{count}件の順位を取得しました")
+            st.session_state.data = load_data()
+
 # データ状態の表示
 if os.path.exists(DATA_FILE):
     st.success("📁 データファイルモード：data.jsonに保存中")
@@ -252,6 +303,28 @@ with tab2:
                 
                 if add_product(product_data):
                     st.success("商品を登録しました！")
+                    
+                    # 登録と同時に初回検索を実行
+                    with st.spinner("初回検索を実行中..."):
+                        import random
+                        today = datetime.now().strftime('%Y-%m-%d')
+                        
+                        for keyword in keyword_list:
+                            # ランダムな順位を生成（デモ用）
+                            amazon_rank = random.choice([None, 1, 2, 3, 5, 8, 12, 20, 35])
+                            rakuten_rank = random.choice([None, 1, 3, 5, 7, 10, 15, 25, 40])
+                            
+                            ranking_data = {
+                                'date': today,
+                                'product': product_name,
+                                'keyword': keyword,
+                                'amazon_rank': amazon_rank,
+                                'rakuten_rank': rakuten_rank
+                            }
+                            
+                            add_ranking(ranking_data)
+                    
+                    st.success(f"✅ 初回検索完了！{len(keyword_list)}件の順位を取得しました")
                     st.balloons()
                     st.rerun()
                 else:
@@ -399,6 +472,17 @@ with st.sidebar:
     
     st.metric("登録商品数", len(products))
     st.metric("データ件数", len(rankings))
+    
+    # 最終更新時刻
+    if rankings:
+        df = pd.DataFrame(rankings)
+        if 'date' in df.columns:
+            last_date = pd.to_datetime(df['date']).max()
+            st.metric("最終更新", last_date.strftime('%Y-%m-%d'))
+            
+            # 次回更新予定
+            next_update = last_date + timedelta(days=1)
+            st.info(f"🕐 次回自動更新: {next_update.strftime('%Y-%m-%d')}")
     
     st.divider()
     

@@ -1,252 +1,252 @@
 {
   "products": [
     {
-      "name": "リノンロックオイル",
+      "name": "サンプル商品A",
       "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE1",
-      "rakuten_url": "https://item.rakuten.co.jp/example/linon-rock-oil",
+      "rakuten_url": "https://item.rakuten.co.jp/example/sample-product-a",
       "asin": "B08EXAMPLE1",
-      "keywords": ["ヘアオイル", "ロックオイル", "ヘアケア"],
+      "keywords": ["キーワード1", "キーワード2", "キーワード3"],
       "created_at": "2024-01-01T10:00:00"
     },
     {
-      "name": "プレミアムシャンプー",
+      "name": "サンプル商品B",
       "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE2",
-      "rakuten_url": "https://item.rakuten.co.jp/example/premium-shampoo",
+      "rakuten_url": "https://item.rakuten.co.jp/example/sample-product-b",
       "asin": "B08EXAMPLE2",
-      "keywords": ["シャンプー", "ノンシリコン", "オーガニックシャンプー"],
+      "keywords": ["キーワード4", "キーワード5", "キーワード6"],
       "created_at": "2024-01-01T10:00:00"
     },
     {
-      "name": "ナチュラルコンディショナー",
+      "name": "サンプル商品C",
       "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE3",
       "rakuten_url": "",
       "asin": "B08EXAMPLE3",
-      "keywords": ["コンディショナー", "トリートメント"],
+      "keywords": ["キーワード7", "キーワード8"],
       "created_at": "2024-01-01T10:00:00"
     }
   ],
   "rankings": [
     {
       "date": "2024-01-01",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード1",
       "amazon_rank": 15,
       "rakuten_rank": 8
     },
     {
       "date": "2024-01-01",
-      "product": "リノンロックオイル",
-      "keyword": "ロックオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード2",
       "amazon_rank": 3,
       "rakuten_rank": 1
     },
     {
       "date": "2024-01-01",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアケア",
+      "product": "サンプル商品A",
+      "keyword": "キーワード3",
       "amazon_rank": 25,
       "rakuten_rank": 20
     },
     {
       "date": "2024-01-05",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード1",
       "amazon_rank": 12,
       "rakuten_rank": 7
     },
     {
       "date": "2024-01-05",
-      "product": "リノンロックオイル",
-      "keyword": "ロックオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード2",
       "amazon_rank": 2,
       "rakuten_rank": 1
     },
     {
       "date": "2024-01-05",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアケア",
+      "product": "サンプル商品A",
+      "keyword": "キーワード3",
       "amazon_rank": 22,
       "rakuten_rank": 18
     },
     {
       "date": "2024-01-10",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード1",
       "amazon_rank": 10,
       "rakuten_rank": 5
     },
     {
       "date": "2024-01-10",
-      "product": "リノンロックオイル",
-      "keyword": "ロックオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード2",
       "amazon_rank": 1,
       "rakuten_rank": 2
     },
     {
       "date": "2024-01-10",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアケア",
+      "product": "サンプル商品A",
+      "keyword": "キーワード3",
       "amazon_rank": 20,
       "rakuten_rank": 15
     },
     {
       "date": "2024-01-15",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード1",
       "amazon_rank": 8,
       "rakuten_rank": 4
     },
     {
       "date": "2024-01-15",
-      "product": "リノンロックオイル",
-      "keyword": "ロックオイル",
+      "product": "サンプル商品A",
+      "keyword": "キーワード2",
       "amazon_rank": 1,
       "rakuten_rank": 1
     },
     {
       "date": "2024-01-15",
-      "product": "リノンロックオイル",
-      "keyword": "ヘアケア",
+      "product": "サンプル商品A",
+      "keyword": "キーワード3",
       "amazon_rank": 18,
       "rakuten_rank": 12
     },
     {
       "date": "2024-01-01",
-      "product": "プレミアムシャンプー",
-      "keyword": "シャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード4",
       "amazon_rank": 30,
       "rakuten_rank": 25
     },
     {
       "date": "2024-01-01",
-      "product": "プレミアムシャンプー",
-      "keyword": "ノンシリコン",
+      "product": "サンプル商品B",
+      "keyword": "キーワード5",
       "amazon_rank": 5,
       "rakuten_rank": 3
     },
     {
       "date": "2024-01-01",
-      "product": "プレミアムシャンプー",
-      "keyword": "オーガニックシャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード6",
       "amazon_rank": 8,
       "rakuten_rank": 10
     },
     {
       "date": "2024-01-05",
-      "product": "プレミアムシャンプー",
-      "keyword": "シャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード4",
       "amazon_rank": 28,
       "rakuten_rank": 22
     },
     {
       "date": "2024-01-05",
-      "product": "プレミアムシャンプー",
-      "keyword": "ノンシリコン",
+      "product": "サンプル商品B",
+      "keyword": "キーワード5",
       "amazon_rank": 4,
       "rakuten_rank": 2
     },
     {
       "date": "2024-01-05",
-      "product": "プレミアムシャンプー",
-      "keyword": "オーガニックシャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード6",
       "amazon_rank": 7,
       "rakuten_rank": 8
     },
     {
       "date": "2024-01-10",
-      "product": "プレミアムシャンプー",
-      "keyword": "シャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード4",
       "amazon_rank": 25,
       "rakuten_rank": 20
     },
     {
       "date": "2024-01-10",
-      "product": "プレミアムシャンプー",
-      "keyword": "ノンシリコン",
+      "product": "サンプル商品B",
+      "keyword": "キーワード5",
       "amazon_rank": 3,
       "rakuten_rank": 2
     },
     {
       "date": "2024-01-10",
-      "product": "プレミアムシャンプー",
-      "keyword": "オーガニックシャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード6",
       "amazon_rank": 6,
       "rakuten_rank": 7
     },
     {
       "date": "2024-01-15",
-      "product": "プレミアムシャンプー",
-      "keyword": "シャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード4",
       "amazon_rank": 22,
       "rakuten_rank": 18
     },
     {
       "date": "2024-01-15",
-      "product": "プレミアムシャンプー",
-      "keyword": "ノンシリコン",
+      "product": "サンプル商品B",
+      "keyword": "キーワード5",
       "amazon_rank": 2,
       "rakuten_rank": 1
     },
     {
       "date": "2024-01-15",
-      "product": "プレミアムシャンプー",
-      "keyword": "オーガニックシャンプー",
+      "product": "サンプル商品B",
+      "keyword": "キーワード6",
       "amazon_rank": 5,
       "rakuten_rank": 6
     },
     {
       "date": "2024-01-01",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "コンディショナー",
+      "product": "サンプル商品C",
+      "keyword": "キーワード7",
       "amazon_rank": 12,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-01",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "トリートメント",
+      "product": "サンプル商品C",
+      "keyword": "キーワード8",
       "amazon_rank": 20,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-05",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "コンディショナー",
+      "product": "サンプル商品C",
+      "keyword": "キーワード7",
       "amazon_rank": 10,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-05",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "トリートメント",
+      "product": "サンプル商品C",
+      "keyword": "キーワード8",
       "amazon_rank": 18,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-10",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "コンディショナー",
+      "product": "サンプル商品C",
+      "keyword": "キーワード7",
       "amazon_rank": 8,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-10",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "トリートメント",
+      "product": "サンプル商品C",
+      "keyword": "キーワード8",
       "amazon_rank": 15,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-15",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "コンディショナー",
+      "product": "サンプル商品C",
+      "keyword": "キーワード7",
       "amazon_rank": 7,
       "rakuten_rank": null
     },
     {
       "date": "2024-01-15",
-      "product": "ナチュラルコンディショナー",
-      "keyword": "トリートメント",
+      "product": "サンプル商品C",
+      "keyword": "キーワード8",
       "amazon_rank": 12,
       "rakuten_rank": null
     }

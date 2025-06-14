@@ -1,0 +1,254 @@
+{
+  "products": [
+    {
+      "name": "リノンロックオイル",
+      "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE1",
+      "rakuten_url": "https://item.rakuten.co.jp/example/linon-rock-oil",
+      "asin": "B08EXAMPLE1",
+      "keywords": ["ヘアオイル", "ロックオイル", "ヘアケア"],
+      "created_at": "2024-01-01T10:00:00"
+    },
+    {
+      "name": "プレミアムシャンプー",
+      "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE2",
+      "rakuten_url": "https://item.rakuten.co.jp/example/premium-shampoo",
+      "asin": "B08EXAMPLE2",
+      "keywords": ["シャンプー", "ノンシリコン", "オーガニックシャンプー"],
+      "created_at": "2024-01-01T10:00:00"
+    },
+    {
+      "name": "ナチュラルコンディショナー",
+      "amazon_url": "https://www.amazon.co.jp/dp/B08EXAMPLE3",
+      "rakuten_url": "",
+      "asin": "B08EXAMPLE3",
+      "keywords": ["コンディショナー", "トリートメント"],
+      "created_at": "2024-01-01T10:00:00"
+    }
+  ],
+  "rankings": [
+    {
+      "date": "2024-01-01",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアオイル",
+      "amazon_rank": 15,
+      "rakuten_rank": 8
+    },
+    {
+      "date": "2024-01-01",
+      "product": "リノンロックオイル",
+      "keyword": "ロックオイル",
+      "amazon_rank": 3,
+      "rakuten_rank": 1
+    },
+    {
+      "date": "2024-01-01",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアケア",
+      "amazon_rank": 25,
+      "rakuten_rank": 20
+    },
+    {
+      "date": "2024-01-05",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアオイル",
+      "amazon_rank": 12,
+      "rakuten_rank": 7
+    },
+    {
+      "date": "2024-01-05",
+      "product": "リノンロックオイル",
+      "keyword": "ロックオイル",
+      "amazon_rank": 2,
+      "rakuten_rank": 1
+    },
+    {
+      "date": "2024-01-05",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアケア",
+      "amazon_rank": 22,
+      "rakuten_rank": 18
+    },
+    {
+      "date": "2024-01-10",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアオイル",
+      "amazon_rank": 10,
+      "rakuten_rank": 5
+    },
+    {
+      "date": "2024-01-10",
+      "product": "リノンロックオイル",
+      "keyword": "ロックオイル",
+      "amazon_rank": 1,
+      "rakuten_rank": 2
+    },
+    {
+      "date": "2024-01-10",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアケア",
+      "amazon_rank": 20,
+      "rakuten_rank": 15
+    },
+    {
+      "date": "2024-01-15",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアオイル",
+      "amazon_rank": 8,
+      "rakuten_rank": 4
+    },
+    {
+      "date": "2024-01-15",
+      "product": "リノンロックオイル",
+      "keyword": "ロックオイル",
+      "amazon_rank": 1,
+      "rakuten_rank": 1
+    },
+    {
+      "date": "2024-01-15",
+      "product": "リノンロックオイル",
+      "keyword": "ヘアケア",
+      "amazon_rank": 18,
+      "rakuten_rank": 12
+    },
+    {
+      "date": "2024-01-01",
+      "product": "プレミアムシャンプー",
+      "keyword": "シャンプー",
+      "amazon_rank": 30,
+      "rakuten_rank": 25
+    },
+    {
+      "date": "2024-01-01",
+      "product": "プレミアムシャンプー",
+      "keyword": "ノンシリコン",
+      "amazon_rank": 5,
+      "rakuten_rank": 3
+    },
+    {
+      "date": "2024-01-01",
+      "product": "プレミアムシャンプー",
+      "keyword": "オーガニックシャンプー",
+      "amazon_rank": 8,
+      "rakuten_rank": 10
+    },
+    {
+      "date": "2024-01-05",
+      "product": "プレミアムシャンプー",
+      "keyword": "シャンプー",
+      "amazon_rank": 28,
+      "rakuten_rank": 22
+    },
+    {
+      "date": "2024-01-05",
+      "product": "プレミアムシャンプー",
+      "keyword": "ノンシリコン",
+      "amazon_rank": 4,
+      "rakuten_rank": 2
+    },
+    {
+      "date": "2024-01-05",
+      "product": "プレミアムシャンプー",
+      "keyword": "オーガニックシャンプー",
+      "amazon_rank": 7,
+      "rakuten_rank": 8
+    },
+    {
+      "date": "2024-01-10",
+      "product": "プレミアムシャンプー",
+      "keyword": "シャンプー",
+      "amazon_rank": 25,
+      "rakuten_rank": 20
+    },
+    {
+      "date": "2024-01-10",
+      "product": "プレミアムシャンプー",
+      "keyword": "ノンシリコン",
+      "amazon_rank": 3,
+      "rakuten_rank": 2
+    },
+    {
+      "date": "2024-01-10",
+      "product": "プレミアムシャンプー",
+      "keyword": "オーガニックシャンプー",
+      "amazon_rank": 6,
+      "rakuten_rank": 7
+    },
+    {
+      "date": "2024-01-15",
+      "product": "プレミアムシャンプー",
+      "keyword": "シャンプー",
+      "amazon_rank": 22,
+      "rakuten_rank": 18
+    },
+    {
+      "date": "2024-01-15",
+      "product": "プレミアムシャンプー",
+      "keyword": "ノンシリコン",
+      "amazon_rank": 2,
+      "rakuten_rank": 1
+    },
+    {
+      "date": "2024-01-15",
+      "product": "プレミアムシャンプー",
+      "keyword": "オーガニックシャンプー",
+      "amazon_rank": 5,
+      "rakuten_rank": 6
+    },
+    {
+      "date": "2024-01-01",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "コンディショナー",
+      "amazon_rank": 12,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-01",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "トリートメント",
+      "amazon_rank": 20,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-05",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "コンディショナー",
+      "amazon_rank": 10,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-05",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "トリートメント",
+      "amazon_rank": 18,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-10",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "コンディショナー",
+      "amazon_rank": 8,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-10",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "トリートメント",
+      "amazon_rank": 15,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-15",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "コンディショナー",
+      "amazon_rank": 7,
+      "rakuten_rank": null
+    },
+    {
+      "date": "2024-01-15",
+      "product": "ナチュラルコンディショナー",
+      "keyword": "トリートメント",
+      "amazon_rank": 12,
+      "rakuten_rank": null
+    }
+  ]
+}

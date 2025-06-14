@@ -425,3 +425,15 @@ with st.sidebar:
                 file_name="data.json",
                 mime="application/json"
             )
+        
+        # サンプルデータ読み込み
+        if st.button("📊 サンプルデータを読み込む"):
+            if os.path.exists("sample_data.json"):
+                with open("sample_data.json", 'r', encoding='utf-8') as f:
+                    sample_data = json.load(f)
+                st.session_state.data = sample_data
+                save_data(st.session_state.data)
+                st.success("サンプルデータを読み込みました！")
+                st.rerun()
+            else:
+                st.error("sample_data.jsonが見つかりません")

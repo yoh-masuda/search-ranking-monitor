@@ -1,5 +1,6 @@
 """
-Streamlit版 検索順位モニタリングアプリ（データ共有版）
+Streamlit版 検索順位モニタリングアプリ（シンプル版）
+データはJSONファイルで保存
 """
 
 import streamlit as st
@@ -9,7 +10,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import json
 import os
-from deta import Deta
 
 # ページ設定
 st.set_page_config(
@@ -18,28 +18,61 @@ st.set_page_config(
     layout="wide"
 )
 
-# Deta初期化（環境変数から）
-# Streamlit Secretsから取得
-DETA_KEY = None
-if 'DETA_PROJECT_KEY' in st.secrets:
-    DETA_KEY = st.secrets['DETA_PROJECT_KEY']
-elif 'DETA_PROJECT_KEY' in os.environ:
-    DETA_KEY = os.environ['DETA_PROJECT_KEY']
+# データファイル
+DATA_FILE = "data.json"
 
-if DETA_KEY:
-    try:
-        deta = Deta(DETA_KEY)
-        db_products = deta.Base("products")
-        db_rankings = deta.Base("rankings")
-    except Exception as e:
-        st.warning(f"⚠️ データベース接続エラー: {str(e)}")
-        db_products = None
-        db_rankings = None
-else:
-    # ローカル開発用
-    st.warning("⚠️ データベース未接続。ローカルモードで動作中。")
-    db_products = None
-    db_rankings = None
+# データの読み込み
+def load_data():
+    """データをJSONファイルから読み込む"""
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {"products": [], "rankings": []}
+
+# データの保存
+def save_data(data):
+    """データをJSONファイルに保存"""
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+# 初期データ読み込み
+if 'data' not in st.session_state:
+    st.session_state.data = load_data()
+
+# データ取得関数
+def get_products():
+    """商品リストを取得"""
+    return st.session_state.data.get('products', [])
+
+def get_rankings():
+    """ランキングデータを取得"""
+    return st.session_state.data.get('rankings', [])
+
+def add_product(product_data):
+    """商品を追加"""
+    products = st.session_state.data.get('products', [])
+    products.append(product_data)
+    st.session_state.data['products'] = products
+    save_data(st.session_state.data)
+    return True
+
+def add_ranking(ranking_data):
+    """ランキングデータを追加"""
+    rankings = st.session_state.data.get('rankings', [])
+    rankings.append(ranking_data)
+    st.session_state.data['rankings'] = rankings
+    save_data(st.session_state.data)
+    return True
+
+def delete_product(index):
+    """商品を削除"""
+    products = st.session_state.data.get('products', [])
+    if 0 <= index < len(products):
+        products.pop(index)
+        st.session_state.data['products'] = products
+        save_data(st.session_state.data)
+        return True
+    return False
 
 # CSSスタイル
 st.markdown("""
@@ -52,12 +85,6 @@ st.markdown("""
         padding-left: 20px;
         padding-right: 20px;
     }
-    .ranking-card {
-        background-color: #f0f2f6;
-        padding: 20px;
-        border-radius: 10px;
-        margin: 10px 0;
-    }
     .product-card {
         background-color: #f8f9fa;
         padding: 15px;
@@ -68,96 +95,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# データ取得関数
-@st.cache_data(ttl=10)  # 10秒キャッシュ
-def get_products():
-    """商品リストを取得"""
-    if db_products:
-        try:
-            result = db_products.fetch()
-            return result.items
-        except:
-            return []
-    else:
-        # ローカルモード
-        if 'products' not in st.session_state:
-            st.session_state.products = []
-        return st.session_state.products
-
-@st.cache_data(ttl=10)  # 10秒キャッシュ
-def get_rankings():
-    """ランキングデータを取得"""
-    if db_rankings:
-        try:
-            result = db_rankings.fetch()
-            return result.items
-        except:
-            return []
-    else:
-        # ローカルモード
-        if 'rankings' not in st.session_state:
-            st.session_state.rankings = []
-        return st.session_state.rankings
-
-def add_product(product_data):
-    """商品を追加"""
-    if db_products:
-        try:
-            # 一意のキーを生成
-            key = f"{product_data['name']}_{datetime.now().timestamp()}"
-            db_products.put(product_data, key)
-            st.cache_data.clear()  # キャッシュをクリア
-            return True
-        except:
-            return False
-    else:
-        # ローカルモード
-        if 'products' not in st.session_state:
-            st.session_state.products = []
-        st.session_state.products.append(product_data)
-        return True
-
-def add_ranking(ranking_data):
-    """ランキングデータを追加"""
-    if db_rankings:
-        try:
-            # 一意のキーを生成
-            key = f"{ranking_data['product']}_{ranking_data['keyword']}_{ranking_data['date']}"
-            db_rankings.put(ranking_data, key)
-            st.cache_data.clear()  # キャッシュをクリア
-            return True
-        except:
-            return False
-    else:
-        # ローカルモード
-        if 'rankings' not in st.session_state:
-            st.session_state.rankings = []
-        st.session_state.rankings.append(ranking_data)
-        return True
-
-def delete_product(key):
-    """商品を削除"""
-    if db_products:
-        try:
-            db_products.delete(key)
-            st.cache_data.clear()  # キャッシュをクリア
-            return True
-        except:
-            return False
-    else:
-        # ローカルモード（インデックスで削除）
-        if 'products' in st.session_state:
-            st.session_state.products.pop(key)
-        return True
-
 # タイトル
 st.title("🔍 Amazon・楽天 検索順位モニタリング")
 
-# 共有状態の表示
-if db_products:
-    st.success("🌐 データ共有モード：すべてのユーザーと情報を共有中")
+# データ状態の表示
+if os.path.exists(DATA_FILE):
+    st.success("📁 データファイルモード：data.jsonに保存中")
 else:
-    st.info("💻 ローカルモード：データはこのセッションのみ有効")
+    st.info("📁 新規データファイルを作成します")
 
 # タブ
 tab1, tab2, tab3 = st.tabs(["📊 ダッシュボード", "📦 商品管理", "🔄 検索実行"])
@@ -171,7 +116,7 @@ with tab1:
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        product_names = [p.get('name', p.get('key', '')) for p in products]
+        product_names = [p.get('name', '') for p in products]
         selected_product = st.selectbox(
             "商品選択",
             ["すべて"] + product_names
@@ -179,7 +124,7 @@ with tab1:
     
     with col2:
         if selected_product != "すべて":
-            product = next((p for p in products if p.get('name', p.get('key', '')) == selected_product), None)
+            product = next((p for p in products if p.get('name', '') == selected_product), None)
             if product and 'keywords' in product:
                 selected_keyword = st.selectbox(
                     "キーワード",
@@ -198,7 +143,7 @@ with tab1:
     
     with col4:
         if st.button("🔄 更新", type="primary"):
-            st.cache_data.clear()
+            st.session_state.data = load_data()
             st.rerun()
     
     # グラフ表示
@@ -258,27 +203,6 @@ with tab1:
                 
             except Exception as e:
                 st.error(f"グラフの表示中にエラーが発生しました: {str(e)}")
-            
-            # 統計情報
-            col1, col2, col3 = st.columns(3)
-            
-            with col1:
-                if 'amazon_rank' in df.columns:
-                    amazon_best = df[df['amazon_rank'].notna()]['amazon_rank'].min()
-                    st.metric("Amazon最高順位", f"{int(amazon_best)}位" if pd.notna(amazon_best) else "データなし")
-                else:
-                    st.metric("Amazon最高順位", "データなし")
-            
-            with col2:
-                if 'rakuten_rank' in df.columns:
-                    rakuten_best = df[df['rakuten_rank'].notna()]['rakuten_rank'].min()
-                    st.metric("楽天最高順位", f"{int(rakuten_best)}位" if pd.notna(rakuten_best) else "データなし")
-                else:
-                    st.metric("楽天最高順位", "データなし")
-            
-            with col3:
-                last_date = df['date'].max().strftime('%Y-%m-%d')
-                st.metric("最終更新", last_date)
         else:
             st.info("データがありません。商品を登録して検索を実行してください。")
     else:
@@ -363,22 +287,15 @@ with tab2:
                         st.link_button("楽天で見る", product['rakuten_url'])
                 
                 with col3:
-                    if db_products:
-                        # Deta使用時はキーで削除
-                        if st.button(f"削除", key=f"delete_{product.get('key', i)}"):
-                            if delete_product(product['key']):
-                                st.rerun()
-                    else:
-                        # ローカルモード
-                        if st.button(f"削除", key=f"delete_{i}"):
-                            if delete_product(i):
-                                st.rerun()
+                    if st.button(f"削除", key=f"delete_{i}"):
+                        if delete_product(i):
+                            st.rerun()
                 
                 if 'keywords' in product:
                     st.write(f"**キーワード:** {', '.join(product['keywords'])}")
                 
                 # 最新順位を表示
-                product_name = product.get('name', product.get('key', ''))
+                product_name = product.get('name', '')
                 latest_rankings = [r for r in rankings if r.get('product') == product_name]
                 
                 if latest_rankings:
@@ -403,7 +320,7 @@ with tab3:
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        product_names = [p.get('name', p.get('key', '')) for p in products]
+        product_names = [p.get('name', '') for p in products]
         target_product = st.selectbox(
             "対象商品",
             ["すべての商品"] + product_names
@@ -419,7 +336,7 @@ with tab3:
                     
                     products_to_search = products
                     if target_product != "すべての商品":
-                        products_to_search = [p for p in products if p.get('name', p.get('key', '')) == target_product]
+                        products_to_search = [p for p in products if p.get('name', '') == target_product]
                     
                     count = 0
                     for product in products_to_search:
@@ -430,7 +347,7 @@ with tab3:
                             
                             ranking_data = {
                                 'date': today,
-                                'product': product.get('name', product.get('key', '')),
+                                'product': product.get('name', ''),
                                 'keyword': keyword,
                                 'amazon_rank': amazon_rank,
                                 'rakuten_rank': rakuten_rank
@@ -441,7 +358,6 @@ with tab3:
                     
                     st.success(f"✅ {count}件の検索結果を取得しました！")
                     st.balloons()
-                    st.cache_data.clear()
                     st.rerun()
             else:
                 st.error("商品が登録されていません")
@@ -484,37 +400,26 @@ with st.sidebar:
     
     st.divider()
     
+    # データファイル情報
+    if os.path.exists(DATA_FILE):
+        file_size = os.path.getsize(DATA_FILE)
+        st.info(f"💾 データファイル: {file_size:,} bytes")
+    
     # 管理者機能
     with st.expander("🔧 管理者機能"):
         st.warning("⚠️ 注意：これらの操作は取り消せません")
         
         if st.button("🗑️ すべてのデータをクリア", type="secondary"):
-            if db_products and db_rankings:
-                # Detaのデータをクリア
-                try:
-                    # すべてのアイテムを取得して削除
-                    products = db_products.fetch()
-                    for item in products.items:
-                        db_products.delete(item['key'])
-                    
-                    rankings = db_rankings.fetch()
-                    for item in rankings.items:
-                        db_rankings.delete(item['key'])
-                    
-                    st.cache_data.clear()
-                    st.success("データをクリアしました")
-                    st.rerun()
-                except:
-                    st.error("データのクリアに失敗しました")
-            else:
-                # ローカルモード
-                if 'products' in st.session_state:
-                    st.session_state.products = []
-                if 'rankings' in st.session_state:
-                    st.session_state.rankings = []
-                st.rerun()
+            st.session_state.data = {"products": [], "rankings": []}
+            save_data(st.session_state.data)
+            st.success("データをクリアしました")
+            st.rerun()
         
-        if db_products:
-            st.info("🌐 Deta Cloud接続中")
-        else:
-            st.info("💻 ローカルモード")
+        if st.button("💾 データをダウンロード"):
+            json_str = json.dumps(st.session_state.data, ensure_ascii=False, indent=2)
+            st.download_button(
+                label="data.jsonをダウンロード",
+                data=json_str,
+                file_name="data.json",
+                mime="application/json"
+            )
